@@ -5,8 +5,8 @@
 
 Name:		chromium
 Version:	31.0.1650.63
-Release:	1%{?dist}
-Summary:	A WebKit powered web browser
+Release:        2.tarent%{?dist}
+Summary:        A WebKit powered web browser (rebuild by: Sascha Girrulat <s.girrulat@tarent.de>))
 
 License:	BSD and LGPLv2+
 Group:		Applications/Internet
@@ -34,12 +34,12 @@ Source6:	clean_ffmpeg.sh
 Source7:	chromium-latest.py
 Source8:	process_ffmpeg_gyp.py
 # https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
-Source10:	libpepflashplayer.so.x86_64
-Source11:	manifest.json.x86_64
+#Source10:	libpepflashplayer.so.x86_64
+#Source11:	manifest.json.x86_64
 #Source12:	libpdf.so.x86_64
 # https://dl.google.com/linux/direct/google-chrome-stable_current_i386.rpm
-Source13:	libpepflashplayer.so.i386
-Source14:	manifest.json.i386
+#Source13:	libpepflashplayer.so.i386
+#Source14:	manifest.json.i386
 #Source15:	libpdf.so.i386
 
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -160,16 +160,16 @@ mkdir -p %{buildroot}%{_datadir}/applications/
 desktop-file-install --dir %{buildroot}%{_datadir}/applications %{SOURCE2}
 
 # Bundle PepperFlash and libpdf from Chrome's rpm
-mkdir -p %{buildroot}%{chromium_path}/PepperFlash
-%ifarch x86_64
-	cp -a %{SOURCE10} %{buildroot}%{chromium_path}/PepperFlash/libpepflashplayer.so
-	cp -a %{SOURCE11} %{buildroot}%{chromium_path}/PepperFlash/manifest.json
+#mkdir -p %{buildroot}%{chromium_path}/PepperFlash
+#%ifarch x86_64
+#	cp -a %{SOURCE10} %{buildroot}%{chromium_path}/PepperFlash/libpepflashplayer.so
+#	cp -a %{SOURCE11} %{buildroot}%{chromium_path}/PepperFlash/manifest.json
 #	cp -a %{SOURCE12} %{buildroot}%{chromium_path}/libpdf.so
-%else
-	cp -a %{SOURCE13} %{buildroot}%{chromium_path}/PepperFlash/libpepflashplayer.so
-	cp -a %{SOURCE14} %{buildroot}%{chromium_path}/PepperFlash/manifest.json
+#%else
+#	cp -a %{SOURCE13} %{buildroot}%{chromium_path}/PepperFlash/libpepflashplayer.so
+#	cp -a %{SOURCE14} %{buildroot}%{chromium_path}/PepperFlash/manifest.json
 #	cp -a %{SOURCE15} %{buildroot}%{chromium_path}/libpdf.so
-%endif
+#%endif
 
 %clean
 rm -rf %{buildroot}
@@ -203,15 +203,18 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 /%{chromium_path}/locales/
 /%{chromium_path}/plugins/
 /%{chromium_path}/resources/
-/%{chromium_path}/PepperFlash
+#/%{chromium_path}/PepperFlash
 %{_mandir}/man1/chromium-browser.*
 %{_datadir}/icons/hicolor/256x256/apps/chromium-browser.png
 %{_datadir}/applications/*.desktop
 
 #%attr(775, root, root) /%{chromium_path}/libpdf.so
-%attr(775, root, root) /%{chromium_path}/PepperFlash/libpepflashplayer.so
+#%attr(775, root, root) /%{chromium_path}/PepperFlash/libpepflashplayer.so
 
 %changelog
+* Thu Jun 3 2014 Sascha Girrulat <sascha@girrulat.de> 31.0.1650.67-2.tarent
+- readd chromedriver and remove pepperflash like Jonny Hughes 
+
 * Thu Dec 5 2013 Tomas Popela <tpopela@redhat.com> 31.0.1650.67-1
 - Update to 31.0.1650.63
 
